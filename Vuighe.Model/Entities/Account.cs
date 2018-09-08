@@ -14,7 +14,9 @@ namespace Vuighe.Model.Entities
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}".Trim();
 
-        public string ProfileImageUrl { get; set; }
+        public Guid? ProfileImageId { get; set; }
+
+        public Asset ProfileImage { get; set; }
 
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }

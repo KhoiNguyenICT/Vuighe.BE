@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Vuighe.Common.Interfaces;
 using Vuighe.Model.Entities;
 using Vuighe.Model.EntityConfigurations;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Vuighe.Model
 {
-    public class AppDbContext: IdentityDbContext<Account, IdentityRole<Guid>, Guid>
+    public class AppDbContext : IdentityDbContext<Account, IdentityRole<Guid>, Guid>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -20,7 +20,23 @@ namespace Vuighe.Model
 
         public virtual DbSet<Asset> Assets { get; set; }
 
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<CategoryFilm> CategoryFilms { get; set; }
+        public virtual DbSet<CategoryTag> CategoryTags { get; set; }
+
         public virtual DbSet<ConfigurationValue> ConfigurationValues { get; set; }
+
+        public virtual DbSet<Episode> Episodes { get; set; }
+
+        public virtual DbSet<EpisodeTag> EpisodeTags { get; set; }
+
+        public virtual DbSet<Film> Films { get; set; }
+
+        public virtual DbSet<FilmEpisode> FilmEpisodes { get; set; }
+
+        public virtual DbSet<FilmTag> FilmTags { get; set; }
+
+        public virtual DbSet<Log> Logs { get; set; }
 
         public virtual DbSet<LoginHistory> LoginHistories { get; set; }
 

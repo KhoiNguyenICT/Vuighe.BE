@@ -1,7 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+using Vuighe.Common;
 using Vuighe.Model.Entities;
+using Vuighe.Model.Utils;
 using Vuighe.Service.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Vuighe.Api.Controllers
 {
@@ -19,6 +23,31 @@ namespace Vuighe.Api.Controllers
         {
             await _categoryService.Add(entity);
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Query(int skip = 0, int take = 10, string query = null)
+        {
+            var queryable = _categoryService.Queryable();
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                queryable = queryable.MatchSearchQuery(query);
+            }
+
+            var list = new QueryResult<Category>
+            {
+                Items = await queryable.Skip(skip).Take(take)
+                    .OrderByDescending(x => x.CreatedDate)
+                    .Select(x => new Category()
+                    {
+                        Title = x.Title,
+                        CreatedDate = x.CreatedDate,
+                        UpdatedDate = x.UpdatedDate
+                    }).ToListAsync(),
+                Count = await queryable.CountAsync()
+            };
+            return Ok(list);
         }
     }
 }

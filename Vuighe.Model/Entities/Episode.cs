@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Vuighe.Model.Entities
@@ -14,7 +15,8 @@ namespace Vuighe.Model.Entities
         public int LikeCount { get; set; }
         public int FollowCount { get; set; }
         public int ViewCount { get; set; }
-        public string Thumbnail { get; set; }
+        public Guid? ThumbnailId { get; set; }
+        public Asset Thumbnail { get; set; }
 
         public virtual ICollection<FilmEpisode> FilmEpisodes { get; set; }
         public virtual ICollection<EpisodeTag> EpisodeTags { get; set; }

@@ -1,9 +1,12 @@
-﻿using Vuighe.Model;
+﻿using System.Collections.Generic;
+using System.IO;
+using Vuighe.Model;
 using Vuighe.Model.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Vuighe.Api.Extensions;
 
 namespace Vuighe.Api.Configurations.Systems
@@ -28,6 +31,7 @@ namespace Vuighe.Api.Configurations.Systems
         {
             await _context.Database.MigrateAsync();
             await InitAccount();
+            await InitCategory();
         }
 
         private string CreatePath(string jsonFile)
@@ -49,6 +53,17 @@ namespace Vuighe.Api.Configurations.Systems
                 return;
             }
             await _userManager.CreateAsync(account, _configuration["DefaultAdmin:Password"]);
+        }
+
+        private async Task InitCategory()
+        {
+            if (!await _context.Categories.AnyAsync())
+            {
+                var input = File.ReadAllText(CreatePath("default-category.json"));
+                var categories = JsonConvert.DeserializeObject<List<Category>>(input);
+                _context.Categories.AddRange(categories);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
