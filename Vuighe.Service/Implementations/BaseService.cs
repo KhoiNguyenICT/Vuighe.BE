@@ -70,8 +70,9 @@ namespace Vuighe.Service.Implementations
             await _context.SaveChangesAsync();
         }
 
-        public async Task Remove(TEntity entity, Guid? updaterId)
+        public async Task Remove(Guid id)
         {
+            var entity = _context.Set<TEntity>().Find(id);
             _context.Entry(entity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }

@@ -22,7 +22,7 @@ namespace Vuighe.Service.Interfaces
 
         Task Update(IList<TEntity> entities);
 
-        Task Remove(TEntity entity, Guid? updaterId);
+        Task Remove(Guid id);
 
         Task RemoveMultiple(IList<TEntity> entities, Guid? updaterId);
 

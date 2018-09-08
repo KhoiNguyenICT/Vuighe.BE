@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Vuighe.Api.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> Create(Category entity)
         {
             await _categoryService.Add(entity);
@@ -37,10 +38,12 @@ namespace Vuighe.Api.Controllers
 
             var list = new QueryResult<Category>
             {
-                Items = await queryable.Skip(skip).Take(take)
-                    .OrderByDescending(x => x.CreatedDate)
+                Items = await queryable
+                    .OrderByDescending(x=>x.CreatedDate)
+                    .Skip(skip).Take(take)
                     .Select(x => new Category()
                     {
+                        Id = x.Id,
                         Title = x.Title,
                         CreatedDate = x.CreatedDate,
                         UpdatedDate = x.UpdatedDate
@@ -48,6 +51,13 @@ namespace Vuighe.Api.Controllers
                 Count = await queryable.CountAsync()
             };
             return Ok(list);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _categoryService.Remove(id);
+            return Ok();
         }
     }
 }
