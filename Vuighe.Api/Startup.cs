@@ -67,6 +67,8 @@ namespace Vuighe.Api
             services.AddScoped<AppInitializer>();
             services.AddScoped<ILoginHistoryService, LoginHistoryService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IFilmService, FilmService>();
+            services.AddScoped<IEpisodeService, EpisodeService>();
 
             Mapper.Initialize(cfg =>
             {
