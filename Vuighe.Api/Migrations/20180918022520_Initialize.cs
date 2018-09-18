@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using NpgsqlTypes;
 
 namespace Vuighe.Api.Migrations
 {
@@ -162,7 +163,8 @@ namespace Vuighe.Api.Migrations
                     UpdatedDate = table.Column<DateTime>(nullable: false),
                     Title = table.Column<string>(maxLength: 500, nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    ThumbnailId = table.Column<Guid>(nullable: true)
+                    ThumbnailId = table.Column<Guid>(nullable: true),
+                    SearchVector = table.Column<NpgsqlTsVector>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -173,33 +175,6 @@ namespace Vuighe.Api.Migrations
                         principalTable: "Assets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Episodes",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(maxLength: 500, nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true),
-                    VideoSource = table.Column<string>(nullable: true),
-                    LikeCount = table.Column<int>(nullable: false),
-                    FollowCount = table.Column<int>(nullable: false),
-                    ViewCount = table.Column<int>(nullable: false),
-                    ThumbnailId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Episodes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Episodes_Assets_ThumbnailId",
-                        column: x => x.ThumbnailId,
-                        principalTable: "Assets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -314,6 +289,34 @@ namespace Vuighe.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    ParentId = table.Column<Guid>(nullable: false),
+                    CommentedById = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_CommentedById",
+                        column: x => x.CommentedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_Comments_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CategoryTags",
                 columns: table => new
                 {
@@ -326,6 +329,7 @@ namespace Vuighe.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CategoryTags", x => new { x.CategoryId, x.TagId });
+                    table.UniqueConstraint("AK_CategoryTags_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CategoryTags_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -334,33 +338,6 @@ namespace Vuighe.Api.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CategoryTags_Tag_TagId",
-                        column: x => x.TagId,
-                        principalTable: "Tag",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EpisodeTags",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
-                    EpisodeId = table.Column<Guid>(nullable: false),
-                    TagId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EpisodeTags", x => new { x.EpisodeId, x.TagId });
-                    table.ForeignKey(
-                        name: "FK_EpisodeTags_Episodes_EpisodeId",
-                        column: x => x.EpisodeId,
-                        principalTable: "Episodes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EpisodeTags_Tag_TagId",
                         column: x => x.TagId,
                         principalTable: "Tag",
                         principalColumn: "Id",
@@ -380,6 +357,7 @@ namespace Vuighe.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CategoryFilms", x => new { x.CategoryId, x.FilmId });
+                    table.UniqueConstraint("AK_CategoryFilms_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CategoryFilms_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -395,30 +373,37 @@ namespace Vuighe.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FilmEpisodes",
+                name: "Episodes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
-                    FilmId = table.Column<Guid>(nullable: false),
-                    EpisodeId = table.Column<Guid>(nullable: false)
+                    Title = table.Column<string>(maxLength: 500, nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    VideoSource = table.Column<string>(nullable: true),
+                    LikeCount = table.Column<int>(nullable: false),
+                    FollowCount = table.Column<int>(nullable: false),
+                    ViewCount = table.Column<int>(nullable: false),
+                    ThumbnailId = table.Column<Guid>(nullable: true),
+                    FilmId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FilmEpisodes", x => new { x.EpisodeId, x.FilmId });
+                    table.PrimaryKey("PK_Episodes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FilmEpisodes_Episodes_EpisodeId",
-                        column: x => x.EpisodeId,
-                        principalTable: "Episodes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FilmEpisodes_Films_FilmId",
+                        name: "FK_Episodes_Films_FilmId",
                         column: x => x.FilmId,
                         principalTable: "Films",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Episodes_Assets_ThumbnailId",
+                        column: x => x.ThumbnailId,
+                        principalTable: "Assets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -434,6 +419,7 @@ namespace Vuighe.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FilmTags", x => new { x.FilmId, x.TagId });
+                    table.UniqueConstraint("AK_FilmTags_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_FilmTags_Films_FilmId",
                         column: x => x.FilmId,
@@ -442,6 +428,34 @@ namespace Vuighe.Api.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FilmTags_Tag_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tag",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EpisodeTags",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    EpisodeId = table.Column<Guid>(nullable: false),
+                    TagId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EpisodeTags", x => new { x.EpisodeId, x.TagId });
+                    table.UniqueConstraint("AK_EpisodeTags_Id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EpisodeTags_Episodes_EpisodeId",
+                        column: x => x.EpisodeId,
+                        principalTable: "Episodes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EpisodeTags_Tag_TagId",
                         column: x => x.TagId,
                         principalTable: "Tag",
                         principalColumn: "Id",
@@ -491,6 +505,12 @@ namespace Vuighe.Api.Migrations
                 column: "ProfileImageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_SearchVector",
+                table: "Categories",
+                column: "SearchVector")
+                .Annotation("Npgsql:IndexMethod", "GIN");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Categories_ThumbnailId",
                 table: "Categories",
                 column: "ThumbnailId",
@@ -512,6 +532,21 @@ namespace Vuighe.Api.Migrations
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_CommentedById",
+                table: "Comments",
+                column: "CommentedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_ParentId",
+                table: "Comments",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Episodes_FilmId",
+                table: "Episodes",
+                column: "FilmId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Episodes_ThumbnailId",
                 table: "Episodes",
                 column: "ThumbnailId");
@@ -525,11 +560,6 @@ namespace Vuighe.Api.Migrations
                 name: "IX_EpisodeTags_TagId",
                 table: "EpisodeTags",
                 column: "TagId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FilmEpisodes_FilmId",
-                table: "FilmEpisodes",
-                column: "FilmId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Films_ThumbnailId",
@@ -571,13 +601,13 @@ namespace Vuighe.Api.Migrations
                 name: "CategoryTags");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "ConfigurationValues");
 
             migrationBuilder.DropTable(
                 name: "EpisodeTags");
-
-            migrationBuilder.DropTable(
-                name: "FilmEpisodes");
 
             migrationBuilder.DropTable(
                 name: "FilmTags");
@@ -592,19 +622,19 @@ namespace Vuighe.Api.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Episodes");
 
             migrationBuilder.DropTable(
-                name: "Films");
+                name: "Tag");
 
             migrationBuilder.DropTable(
-                name: "Tag");
+                name: "Films");
 
             migrationBuilder.DropTable(
                 name: "Assets");

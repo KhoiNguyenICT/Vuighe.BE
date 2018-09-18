@@ -10,5 +10,10 @@ namespace Vuighe.Service.Mapper
         {
             CreateMap<Asset, Asset>();
         }
+
+        private void CreateMapFilm()
+        {
+            
+        }
     }
 }

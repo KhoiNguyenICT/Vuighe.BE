@@ -1,18 +1,17 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Vuighe.Common.Interfaces;
 using Vuighe.Model;
 using Vuighe.Model.Entities;
 using Vuighe.Service.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Vuighe.Service.Implementations
 {
     public abstract class BaseService<TEntity> : IService<TEntity>
-        where TEntity : BaseEntity 
+        where TEntity : BaseEntity
     {
         private readonly AppDbContext _context;
 

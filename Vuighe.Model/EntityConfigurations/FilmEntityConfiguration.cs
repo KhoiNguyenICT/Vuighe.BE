@@ -9,6 +9,11 @@ namespace Vuighe.Model.EntityConfigurations
         public void Configure(EntityTypeBuilder<Film> builder)
         {
             builder.HasIndex(x => x.Title);
+
+            builder.HasMany(x => x.Episodes)
+                .WithOne(x => x.Film)
+                .HasForeignKey(x => x.FilmId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

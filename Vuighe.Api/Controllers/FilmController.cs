@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Vuighe.Common;
 using Vuighe.Model.Entities;
 using Vuighe.Model.Utils;
@@ -13,10 +13,12 @@ namespace Vuighe.Api.Controllers
     public class FilmController : BaseController
     {
         private readonly IFilmService _filmService;
+        private readonly ICategoryService _categoryService;
 
-        public FilmController(IFilmService filmService)
+        public FilmController(IFilmService filmService, ICategoryService categoryService)
         {
             _filmService = filmService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
@@ -32,12 +34,14 @@ namespace Vuighe.Api.Controllers
             var list = new QueryResult<Film>
             {
                 Items = await queryable
+                    .Include(x => x.CategoryFilms)
                     .OrderByDescending(x => x.CreatedDate)
                     .Skip(skip).Take(take)
                     .Select(x => new Film()
                     {
                         Id = x.Id,
                         Title = x.Title,
+                        CategoryFilms = x.CategoryFilms,
                         LikeCount = x.LikeCount,
                         FollowCount = x.FollowCount,
                         ViewCount = x.ViewCount,

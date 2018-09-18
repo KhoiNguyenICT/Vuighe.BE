@@ -5,7 +5,21 @@
     "Content": "Film 1 content",
     "LikeCount": 1,
     "FollowCount": 2,
-    "ViewCount": 3
+    "ViewCount": 3,
+    "Episodes": [
+      {
+        "Title": "Episode title 1",
+        "Description": "Episode description 1",
+        "Content": "Episode content 1",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_1.m3u8"
+      },
+      {
+        "Title": "Episode title 2",
+        "Description": "Episode description 2",
+        "Content": "Episode content 2",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_2.m3u8"
+      }
+    ] 
   },
   {
     "Title": "Film 2",
@@ -13,7 +27,21 @@
     "Content": "Film 2 content",
     "LikeCount": 2,
     "FollowCount": 3,
-    "ViewCount": 4
+    "ViewCount": 4,
+    "Episodes": [
+      {
+        "Title": "Episode title 3",
+        "Description": "Episode description 3",
+        "Content": "Episode content 3",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_3.m3u8"
+      },
+      {
+        "Title": "Episode title 4",
+        "Description": "Episode description 4",
+        "Content": "Episode content 4",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_4.m3u8"
+      }
+    ] 
   },
   {
     "Title": "Film 3",
@@ -21,7 +49,21 @@
     "Content": "Film 3 content",
     "LikeCount": 3,
     "FollowCount": 4,
-    "ViewCount": 5
+    "ViewCount": 5,
+    "Episodes": [
+      {
+        "Title": "Episode title 5",
+        "Description": "Episode description 5",
+        "Content": "Episode content 5",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_5.m3u8"
+      },
+      {
+        "Title": "Episode title 6",
+        "Description": "Episode description 6",
+        "Content": "Episode content 6",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_6.m3u8"
+      }
+    ] 
   },
   {
     "Title": "Film 4",
@@ -29,7 +71,21 @@
     "Content": "Film 4 content",
     "LikeCount": 4,
     "FollowCount": 5,
-    "ViewCount": 6
+    "ViewCount": 6,
+    "Episodes": [
+      {
+        "Title": "Episode title 7",
+        "Description": "Episode description 7",
+        "Content": "Episode content 7",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_7.m3u8"
+      },
+      {
+        "Title": "Episode title 8",
+        "Description": "Episode description 8",
+        "Content": "Episode content 8",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_8.m3u8"
+      }
+    ] 
   },
   {
     "Title": "Film 5",
@@ -37,7 +93,21 @@
     "Content": "Film 5 content",
     "LikeCount": 5,
     "FollowCount": 6,
-    "ViewCount": 7
+    "ViewCount": 7,
+    "Episodes": [
+      {
+        "Title": "Episode title 9",
+        "Description": "Episode description 9",
+        "Content": "Episode content 9",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_9.m3u8"
+      },
+      {
+        "Title": "Episode title 10",
+        "Description": "Episode description 10",
+        "Content": "Episode content 10",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_10.m3u8"
+      }
+    ] 
   },
   {
     "Title": "Film 1",
@@ -45,7 +115,21 @@
     "Content": "Film 1 content",
     "LikeCount": 6,
     "FollowCount": 7,
-    "ViewCount": 8
+    "ViewCount": 8,
+    "Episodes": [
+      {
+        "Title": "Episode title 11",
+        "Description": "Episode description 11",
+        "Content": "Episode content 11",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_11.m3u8"
+      },
+      {
+        "Title": "Episode title 12",
+        "Description": "Episode description 12",
+        "Content": "Episode content 12",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_12.m3u8"
+      }
+    ] 
   },
   {
     "Title": "Film 1",
@@ -53,7 +137,21 @@
     "Content": "Film 1 content",
     "LikeCount": 7,
     "FollowCount": 8,
-    "ViewCount": 9
+    "ViewCount": 9,
+    "Episodes": [
+      {
+        "Title": "Episode title 13",
+        "Description": "Episode description 13",
+        "Content": "Episode content 13",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_13.m3u8"
+      },
+      {
+        "Title": "Episode title 14",
+        "Description": "Episode description 14",
+        "Content": "Episode content 14",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_14.m3u8"
+      }
+    ] 
   },
   {
     "Title": "Film 1",
@@ -61,7 +159,21 @@
     "Content": "Film 1 content",
     "LikeCount": 8,
     "FollowCount": 9,
-    "ViewCount": 10
+    "ViewCount": 10,
+    "Episodes": [
+      {
+        "Title": "Episode title 15",
+        "Description": "Episode description 15",
+        "Content": "Episode content 15",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_15.m3u8"
+      },
+      {
+        "Title": "Episode title 16",
+        "Description": "Episode description 16",
+        "Content": "Episode content 16",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_16.m3u8"
+      }
+    ] 
   },
   {
     "Title": "Film 1",
@@ -69,7 +181,21 @@
     "Content": "Film 1 content",
     "LikeCount": 9,
     "FollowCount": 10,
-    "ViewCount": 11
+    "ViewCount": 11,
+    "Episodes": [
+      {
+        "Title": "Episode title 17",
+        "Description": "Episode description 17",
+        "Content": "Episode content 17",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_17.m3u8"
+      },
+      {
+        "Title": "Episode title 18",
+        "Description": "Episode description 18",
+        "Content": "Episode content 18",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_18.m3u8"
+      }
+    ] 
   },
   {
     "Title": "Film 1",
@@ -77,86 +203,20 @@
     "Content": "Film 1 content",
     "LikeCount": 10,
     "FollowCount": 11,
-    "ViewCount": 12
-  },
-  {
-    "Title": "Film 1",
-    "Description": "Film 1 description",
-    "Content": "Film 1 content",
-    "LikeCount": 11,
-    "FollowCount": 12,
-    "ViewCount": 13
-  },
-  {
-    "Title": "Film 1",
-    "Description": "Film 1 description",
-    "Content": "Film 1 content",
-    "LikeCount": 12,
-    "FollowCount": 13,
-    "ViewCount": 14
-  },
-  {
-    "Title": "Film 1",
-    "Description": "Film 1 description",
-    "Content": "Film 1 content",
-    "LikeCount": 13,
-    "FollowCount": 14,
-    "ViewCount": 15
-  },
-  {
-    "Title": "Film 1",
-    "Description": "Film 1 description",
-    "Content": "Film 1 content",
-    "LikeCount": 14,
-    "FollowCount": 15,
-    "ViewCount": 16
-  },
-  {
-    "Title": "Film 1",
-    "Description": "Film 1 description",
-    "Content": "Film 1 content",
-    "LikeCount": 15,
-    "FollowCount": 16,
-    "ViewCount": 17
-  },
-  {
-    "Title": "Film 1",
-    "Description": "Film 1 description",
-    "Content": "Film 1 content",
-    "LikeCount": 16,
-    "FollowCount": 17,
-    "ViewCount": 18
-  },
-  {
-    "Title": "Film 1",
-    "Description": "Film 1 description",
-    "Content": "Film 1 content",
-    "LikeCount": 17,
-    "FollowCount": 18,
-    "ViewCount": 19
-  },
-  {
-    "Title": "Film 1",
-    "Description": "Film 1 description",
-    "Content": "Film 1 content",
-    "LikeCount": 18,
-    "FollowCount": 19,
-    "ViewCount": 20
-  },
-  {
-    "Title": "Film 1",
-    "Description": "Film 1 description",
-    "Content": "Film 1 content",
-    "LikeCount": 19,
-    "FollowCount": 20,
-    "ViewCount": 21
-  },
-  {
-    "Title": "Film 1",
-    "Description": "Film 1 description",
-    "Content": "Film 1 content",
-    "LikeCount": 20,
-    "FollowCount": 21,
-    "ViewCount": 22
+    "ViewCount": 12,
+    "Episodes": [
+      {
+        "Title": "Episode title 19",
+        "Description": "Episode description 19",
+        "Content": "Episode content 1",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_19.m3u8"
+      },
+      {
+        "Title": "Episode title 20",
+        "Description": "Episode description 20",
+        "Content": "Episode content 20",
+        "VideoSource": "http://localhost:5000/video/edpisode_title_20.m3u8"
+      }
+    ] 
   }
 ]

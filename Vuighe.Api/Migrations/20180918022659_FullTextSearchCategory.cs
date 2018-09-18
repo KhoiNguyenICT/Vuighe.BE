@@ -7,17 +7,6 @@ namespace Vuighe.Api.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<NpgsqlTsVector>(
-                name: "SearchVector",
-                table: "Categories",
-                nullable: true);
-
-            migrationBuilder.CreateIndex(
-                    name: "IX_Categories_SearchVector",
-                    table: "Categories",
-                    column: "SearchVector")
-                .Annotation("Npgsql:IndexMethod", "GIN");
-
             migrationBuilder.Sql(@"CREATE OR REPLACE FUNCTION remove_accent(input text)
               RETURNS text
               IMMUTABLE

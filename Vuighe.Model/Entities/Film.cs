@@ -19,7 +19,9 @@ namespace Vuighe.Model.Entities
         public Asset Thumbnail { get; set; }
 
         public virtual ICollection<CategoryFilm> CategoryFilms { get; set; }
-        public virtual ICollection<FilmEpisode> FilmEpisodes { get; set; }
+
         public virtual ICollection<FilmTag> FilmTags { get; set; }
+
+        public virtual ICollection<Episode> Episodes { get; set; }
     }
 }

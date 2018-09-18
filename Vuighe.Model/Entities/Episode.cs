@@ -18,7 +18,10 @@ namespace Vuighe.Model.Entities
         public Guid? ThumbnailId { get; set; }
         public Asset Thumbnail { get; set; }
 
-        public virtual ICollection<FilmEpisode> FilmEpisodes { get; set; }
         public virtual ICollection<EpisodeTag> EpisodeTags { get; set; }
+
+        public Guid FilmId { get; set; }
+
+        public virtual Film Film { get; set; }
     }
 }

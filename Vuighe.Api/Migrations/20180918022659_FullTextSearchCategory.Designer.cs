@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using NpgsqlTypes;
@@ -10,9 +11,10 @@ using Vuighe.Model;
 namespace Vuighe.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180918022659_FullTextSearchCategory")]
+    partial class FullTextSearchCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,20 +249,19 @@ namespace Vuighe.Api.Migrations
 
             modelBuilder.Entity("Vuighe.Model.Entities.CategoryFilm", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
                     b.Property<Guid>("CategoryId");
-
-                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<Guid>("FilmId");
 
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<Guid>("Id");
+
                     b.Property<DateTime>("UpdatedDate");
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId", "FilmId");
 
-                    b.HasIndex("CategoryId");
+                    b.HasAlternateKey("Id");
 
                     b.HasIndex("FilmId");
 

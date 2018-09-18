@@ -8,7 +8,6 @@ namespace Vuighe.Model.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<CategoryFilm> builder)
         {
-            builder.HasKey(x => new {x.CategoryId, x.FilmId});
 
             builder.HasOne(x => x.Category)
                 .WithMany(x => x.CategoryFilms)

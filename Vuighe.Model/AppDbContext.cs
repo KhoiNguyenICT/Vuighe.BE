@@ -32,13 +32,13 @@ namespace Vuighe.Model
 
         public virtual DbSet<Film> Films { get; set; }
 
-        public virtual DbSet<FilmEpisode> FilmEpisodes { get; set; }
-
         public virtual DbSet<FilmTag> FilmTags { get; set; }
 
         public virtual DbSet<Log> Logs { get; set; }
 
         public virtual DbSet<LoginHistory> LoginHistories { get; set; }
+
+        public virtual DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -48,8 +48,8 @@ namespace Vuighe.Model
             builder.ApplyConfiguration(new EpisodeEntityConfiguration());
             builder.ApplyConfiguration(new EpisodeTagEntityConfiguration());
             builder.ApplyConfiguration(new FilmEntityConfiguration());
-            builder.ApplyConfiguration(new FilmEpisodeEntityConfiguration());
             builder.ApplyConfiguration(new FilmTagEntityConfiguration());
+            builder.ApplyConfiguration(new CommentEntityConfiguration());
             base.OnModelCreating(builder);
         }
 
