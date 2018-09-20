@@ -21,6 +21,13 @@ namespace Vuighe.Api.Controllers
             _categoryService = categoryService;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetFilm(Guid id) 
+        {
+            var film = await _filmService.Get(id);
+            return Ok(film);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Query(int skip = 0, int take = 10, string query = null)
         {
