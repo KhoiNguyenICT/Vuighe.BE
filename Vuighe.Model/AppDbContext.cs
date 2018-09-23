@@ -21,7 +21,11 @@ namespace Vuighe.Model
         public virtual DbSet<Asset> Assets { get; set; }
 
         public virtual DbSet<Category> Categories { get; set; }
+
         public virtual DbSet<CategoryFilm> CategoryFilms { get; set; }
+
+        public virtual DbSet<Collection> Collections { get; set; }
+
         public virtual DbSet<CategoryTag> CategoryTags { get; set; }
 
         public virtual DbSet<ConfigurationValue> ConfigurationValues { get; set; }
@@ -42,6 +46,7 @@ namespace Vuighe.Model
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new AssetEntityConfiguration());
             builder.ApplyConfiguration(new CategoryEntityConfiguration());
             builder.ApplyConfiguration(new CategoryFilmEntityConfiguration());
             builder.ApplyConfiguration(new CategoryTagEntityConfiguration());

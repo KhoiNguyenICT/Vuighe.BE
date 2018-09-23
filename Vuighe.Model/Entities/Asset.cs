@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using Vuighe.Common.Attributes;
@@ -21,5 +22,9 @@ namespace Vuighe.Model.Entities
         [NotMapped]
         [ResolveUrl]
         public string FileUrl => Path.GetFileName(FilePath);
+
+        public Guid CollectionId { get; set; }
+
+        public virtual Collection Collection { get; set; }
     }
 }

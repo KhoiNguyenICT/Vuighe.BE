@@ -33,6 +33,7 @@ namespace Vuighe.Api.Configurations.Systems
             await InitAccount();
             await InitCategory();
             await InitFilm();
+            await InitCollection();
         }
 
         private string CreatePath(string jsonFile)
@@ -74,6 +75,17 @@ namespace Vuighe.Api.Configurations.Systems
                 var input = File.ReadAllText(CreatePath("default-film.json"));
                 var films = JsonConvert.DeserializeObject<List<Film>>(input);
                 _context.Films.AddRange(films);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task InitCollection()
+        {
+            if (!await _context.Collections.AnyAsync())
+            {
+                var input = File.ReadAllText(CreatePath("default-collection.json"));
+                var collections = JsonConvert.DeserializeObject<List<Collection>>(input);
+                _context.Collections.AddRange(collections);
                 await _context.SaveChangesAsync();
             }
         }
