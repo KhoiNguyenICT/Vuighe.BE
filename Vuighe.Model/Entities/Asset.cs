@@ -2,10 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
-using Vuighe.Common.Attributes;
+using Microsoft.Extensions.Configuration;
+using Vuighe.Common.Constants;
 
 namespace Vuighe.Model.Entities
 {
+
     public class Asset: BaseEntity
     {
         [Required]
@@ -18,10 +20,6 @@ namespace Vuighe.Model.Entities
 
         [Required]
         public string FilePath { get; set; }
-
-        [NotMapped]
-        [ResolveUrl]
-        public string FileUrl => Path.GetFileName(FilePath);
 
         public Guid CollectionId { get; set; }
 

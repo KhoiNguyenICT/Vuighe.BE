@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Vuighe.Model.Entities;
-using Vuighe.Service.Dtos.LoginHistory;
 
 namespace Vuighe.Service.Mapper
 {
@@ -8,12 +8,9 @@ namespace Vuighe.Service.Mapper
     {
         public DtoMappingProfile()
         {
-            CreateMap<Asset, Asset>();
-        }
-
-        private void CreateMapFilm()
-        {
-            
+            CreateMap<IFormFile, Asset>()
+                .ForMember(d => d.FileExtension, s => s.MapFrom(x => x.ContentType))
+                .ForMember(d => d.FileSize, s => s.MapFrom(x => x.Length));
         }
     }
 }

@@ -6,6 +6,7 @@ using Vuighe.Model;
 using Vuighe.Service.Implementations;
 using Vuighe.Service.Interfaces;
 using Vuighe.Service.Mapper;
+using Vuighe.Api.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,7 @@ namespace Vuighe.Api
 
             services.ConfigureIdentityService(Configuration, _environment);
             ConfigIoc(services);
+            services.AddImageResizer();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -50,6 +52,7 @@ namespace Vuighe.Api
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseImageResizer();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseIdentityServer();
@@ -67,9 +70,11 @@ namespace Vuighe.Api
             services.AddScoped<AppInitializer>();
             services.AddScoped<ILoginHistoryService, LoginHistoryService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICollectionService, CollectionService>();
             services.AddScoped<IFilmService, FilmService>();
             services.AddScoped<IEpisodeService, EpisodeService>();
             services.AddScoped<ICategoryFilmService, CategoryFilmService>();
+            services.AddScoped<IAssetService, AssetService>();
 
             Mapper.Initialize(cfg =>
             {
