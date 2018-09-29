@@ -11,10 +11,6 @@ namespace Vuighe.Model.EntityConfigurations
         {
             builder.HasIndex(x => x.Title);
 
-            builder.HasOne(x => x.Thumbnail).WithOne()
-                .HasForeignKey<Category>(x => x.ThumbnailId)
-                .OnDelete(DeleteBehavior.SetNull);
-
             builder.Property<NpgsqlTsVector>("SearchVector");
             builder.HasIndex("SearchVector").ForNpgsqlHasMethod("GIN");
         }

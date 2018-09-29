@@ -81,11 +81,14 @@ namespace Vuighe.Api.Controllers
         }
 
         [HttpGet("collection/{collectionId}")]
-        public IActionResult GetAssets(Guid collectionId, int skip)
+        public IActionResult GetAssets(Guid collectionId, int skip = 0, int take = 10)
         {
             var queryable = _collectionService.Queryable();
-            var result = queryable.Include(x => x.Assets)
-                .FirstOrDefault(x => x.Id == collectionId)?.Assets.Select(x => new Asset
+            var result = queryable
+                .Include(x => x.Assets)
+                .FirstOrDefault(x => x.Id == collectionId)?.Assets
+                .Skip(skip).Take(take)
+                .Select(x => new Asset
                 {
                     Id = x.Id,
                     FileName = x.FileName,

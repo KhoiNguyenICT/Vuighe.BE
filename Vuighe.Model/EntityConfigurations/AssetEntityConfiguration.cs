@@ -10,7 +10,9 @@ namespace Vuighe.Model.EntityConfigurations
         {
             builder.HasIndex(x => x.FileName);
 
-            builder.HasOne(x => x.Collection).WithMany(x => x.Assets).HasForeignKey(x => x.CollectionId);
+            builder.HasOne(x => x.Collection)
+                .WithMany(x => x.Assets)
+                .HasForeignKey(x => x.CollectionId);
         }
     }
 }

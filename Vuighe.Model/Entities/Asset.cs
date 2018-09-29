@@ -1,14 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using Microsoft.Extensions.Configuration;
-using Vuighe.Common.Constants;
 
 namespace Vuighe.Model.Entities
 {
-
-    public class Asset: BaseEntity
+    public class Asset : BaseEntity
     {
         [Required]
         public string FileName { get; set; }
