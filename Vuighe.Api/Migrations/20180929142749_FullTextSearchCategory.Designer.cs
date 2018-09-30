@@ -11,8 +11,8 @@ using Vuighe.Model;
 namespace Vuighe.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180929025538_UpdateForeginkeyCategory")]
-    partial class UpdateForeginkeyCategory
+    [Migration("20180929142749_FullTextSearchCategory")]
+    partial class FullTextSearchCategory
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -342,10 +342,6 @@ namespace Vuighe.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(255);
 
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<DateTime>("UpdatedDate");
-
                     b.Property<string>("Value");
 
                     b.HasKey("Key");
@@ -516,7 +512,7 @@ namespace Vuighe.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

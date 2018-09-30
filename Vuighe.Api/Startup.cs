@@ -75,10 +75,11 @@ namespace Vuighe.Api
             services.AddScoped<IEpisodeService, EpisodeService>();
             services.AddScoped<ICategoryFilmService, CategoryFilmService>();
             services.AddScoped<IAssetService, AssetService>();
+            services.AddScoped<IConfigurationService, ConfigurationService>();
 
             Mapper.Initialize(cfg =>
             {
-                cfg.AddProfile<DtoMappingProfile>();
+                cfg.AddProfile<Mapping>();
                 cfg.IgnoreUnmapped();
             });
             services.AddSingleton(Mapper.Instance.RegisterMap());

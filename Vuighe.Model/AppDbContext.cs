@@ -44,6 +44,8 @@ namespace Vuighe.Model
 
         public virtual DbSet<Comment> Comments { get; set; }
 
+        public virtual DbSet<Tag> Tags { get; set; }    
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AssetEntityConfiguration());

@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using Vuighe.Model.Entities;
 
 namespace Vuighe.Service.Mapper
 {
-    public class DtoMappingProfile : Profile
+    public class Mapping : Profile
     {
-        public DtoMappingProfile()
+        public Mapping()
         {
             CreateMap<IFormFile, Asset>()
                 .ForMember(d => d.FileExtension, s => s.MapFrom(x => x.ContentType))

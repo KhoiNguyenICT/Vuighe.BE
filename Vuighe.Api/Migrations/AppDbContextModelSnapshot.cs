@@ -336,17 +336,16 @@ namespace Vuighe.Api.Migrations
 
             modelBuilder.Entity("Vuighe.Model.Entities.ConfigurationValue", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<string>("Key")
-                        .ValueGeneratedOnAdd()
+                        .IsRequired()
                         .HasMaxLength(255);
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<DateTime>("UpdatedDate");
 
                     b.Property<string>("Value");
 
-                    b.HasKey("Key");
+                    b.HasKey("Id");
 
                     b.ToTable("ConfigurationValues");
                 });
@@ -514,7 +513,7 @@ namespace Vuighe.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

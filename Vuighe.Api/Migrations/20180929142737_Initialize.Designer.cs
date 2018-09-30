@@ -11,15 +11,15 @@ using Vuighe.Model;
 namespace Vuighe.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180918023142_UpdateForeignKeyCategoryFilm")]
-    partial class UpdateForeignKeyCategoryFilm
+    [Migration("20180929142737_Initialize")]
+    partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -195,6 +195,8 @@ namespace Vuighe.Api.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("CollectionId");
+
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("FileExtension")
@@ -211,6 +213,10 @@ namespace Vuighe.Api.Migrations
                     b.Property<DateTime>("UpdatedDate");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CollectionId");
+
+                    b.HasIndex("FileName");
 
                     b.ToTable("Assets");
                 });
@@ -239,8 +245,7 @@ namespace Vuighe.Api.Migrations
                     b.HasIndex("SearchVector")
                         .HasAnnotation("Npgsql:IndexMethod", "GIN");
 
-                    b.HasIndex("ThumbnailId")
-                        .IsUnique();
+                    b.HasIndex("ThumbnailId");
 
                     b.HasIndex("Title");
 
@@ -290,6 +295,23 @@ namespace Vuighe.Api.Migrations
                     b.ToTable("CategoryTags");
                 });
 
+            modelBuilder.Entity("Vuighe.Model.Entities.Collection", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Collections");
+                });
+
             modelBuilder.Entity("Vuighe.Model.Entities.Comment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -319,10 +341,6 @@ namespace Vuighe.Api.Migrations
                     b.Property<string>("Key")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(255);
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<DateTime>("UpdatedDate");
 
                     b.Property<string>("Value");
 
@@ -494,7 +512,7 @@ namespace Vuighe.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -549,12 +567,19 @@ namespace Vuighe.Api.Migrations
                         .HasForeignKey("ProfileImageId");
                 });
 
+            modelBuilder.Entity("Vuighe.Model.Entities.Asset", b =>
+                {
+                    b.HasOne("Vuighe.Model.Entities.Collection", "Collection")
+                        .WithMany("Assets")
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Vuighe.Model.Entities.Category", b =>
                 {
                     b.HasOne("Vuighe.Model.Entities.Asset", "Thumbnail")
-                        .WithOne()
-                        .HasForeignKey("Vuighe.Model.Entities.Category", "ThumbnailId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .WithMany()
+                        .HasForeignKey("ThumbnailId");
                 });
 
             modelBuilder.Entity("Vuighe.Model.Entities.CategoryFilm", b =>

@@ -92,7 +92,12 @@ namespace Vuighe.Api.Controllers
                 {
                     Id = x.Id,
                     FileName = x.FileName,
-                    FilePath = _configuration[ConfigurationKeys.WebHostUrl] + x.FilePath
+                    FilePath = _configuration[ConfigurationKeys.WebHostUrl] + x.FilePath,
+                    CreatedDate = x.CreatedDate,
+                    FileExtension = x.FileExtension,
+                    FileSize = x.FileSize,
+                    CollectionId = x.CollectionId,
+                    UpdatedDate = x.UpdatedDate
                 }).ToList();
             return Ok(result);
         }

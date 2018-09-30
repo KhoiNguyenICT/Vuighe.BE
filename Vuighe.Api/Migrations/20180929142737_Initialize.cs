@@ -24,20 +24,17 @@ namespace Vuighe.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Assets",
+                name: "Collections",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedDate = table.Column<DateTime>(nullable: false),
-                    FileName = table.Column<string>(nullable: false),
-                    FileExtension = table.Column<string>(maxLength: 50, nullable: true),
-                    FileSize = table.Column<long>(nullable: false),
-                    FilePath = table.Column<string>(nullable: false)
+                    Title = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assets", x => x.Id);
+                    table.PrimaryKey("PK_Collections", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,9 +42,7 @@ namespace Vuighe.Api.Migrations
                 columns: table => new
                 {
                     Key = table.Column<string>(maxLength: 255, nullable: false),
-                    Value = table.Column<string>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedDate = table.Column<DateTime>(nullable: false)
+                    Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -83,7 +78,7 @@ namespace Vuighe.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tag",
+                name: "Tags",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -93,7 +88,7 @@ namespace Vuighe.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tag", x => x.Id);
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,6 +108,30 @@ namespace Vuighe.Api.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Assets",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    FileName = table.Column<string>(nullable: false),
+                    FileExtension = table.Column<string>(maxLength: 50, nullable: true),
+                    FileSize = table.Column<long>(nullable: false),
+                    FilePath = table.Column<string>(nullable: false),
+                    CollectionId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Assets_Collections_CollectionId",
+                        column: x => x.CollectionId,
+                        principalTable: "Collections",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -174,7 +193,7 @@ namespace Vuighe.Api.Migrations
                         column: x => x.ThumbnailId,
                         principalTable: "Assets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -337,9 +356,9 @@ namespace Vuighe.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CategoryTags_Tag_TagId",
+                        name: "FK_CategoryTags_Tags_TagId",
                         column: x => x.TagId,
-                        principalTable: "Tag",
+                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -356,8 +375,7 @@ namespace Vuighe.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CategoryFilms", x => new { x.CategoryId, x.FilmId });
-                    table.UniqueConstraint("AK_CategoryFilms_Id", x => x.Id);
+                    table.PrimaryKey("PK_CategoryFilms", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CategoryFilms_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -427,9 +445,9 @@ namespace Vuighe.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FilmTags_Tag_TagId",
+                        name: "FK_FilmTags_Tags_TagId",
                         column: x => x.TagId,
-                        principalTable: "Tag",
+                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -455,9 +473,9 @@ namespace Vuighe.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EpisodeTags_Tag_TagId",
+                        name: "FK_EpisodeTags_Tags_TagId",
                         column: x => x.TagId,
-                        principalTable: "Tag",
+                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -505,6 +523,16 @@ namespace Vuighe.Api.Migrations
                 column: "ProfileImageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Assets_CollectionId",
+                table: "Assets",
+                column: "CollectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assets_FileName",
+                table: "Assets",
+                column: "FileName");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Categories_SearchVector",
                 table: "Categories",
                 column: "SearchVector")
@@ -513,13 +541,17 @@ namespace Vuighe.Api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_ThumbnailId",
                 table: "Categories",
-                column: "ThumbnailId",
-                unique: true);
+                column: "ThumbnailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_Title",
                 table: "Categories",
                 column: "Title");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryFilms_CategoryId",
+                table: "CategoryFilms",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryFilms_FilmId",
@@ -631,13 +663,16 @@ namespace Vuighe.Api.Migrations
                 name: "Episodes");
 
             migrationBuilder.DropTable(
-                name: "Tag");
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Films");
 
             migrationBuilder.DropTable(
                 name: "Assets");
+
+            migrationBuilder.DropTable(
+                name: "Collections");
         }
     }
 }
