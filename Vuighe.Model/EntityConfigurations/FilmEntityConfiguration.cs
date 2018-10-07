@@ -1,6 +1,7 @@
 ﻿using Vuighe.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NpgsqlTypes;
 
 namespace Vuighe.Model.EntityConfigurations
 {
@@ -14,6 +15,9 @@ namespace Vuighe.Model.EntityConfigurations
                 .WithOne(x => x.Film)
                 .HasForeignKey(x => x.FilmId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property<NpgsqlTsVector>("SearchVector");
+            builder.HasIndex("SearchVector").ForNpgsqlHasMethod("GIN");
         }
     }
 }

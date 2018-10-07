@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using NpgsqlTypes;
@@ -10,9 +11,10 @@ using Vuighe.Model;
 namespace Vuighe.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181002015028_FullTextSearchPost")]
+    partial class FullTextSearchPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,8 +185,7 @@ namespace Vuighe.Api.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
-                    b.HasIndex("ProfileImageId")
-                        .IsUnique();
+                    b.HasIndex("ProfileImageId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -209,8 +210,6 @@ namespace Vuighe.Api.Migrations
 
                     b.Property<long>("FileSize");
 
-                    b.Property<NpgsqlTsVector>("SearchVector");
-
                     b.Property<DateTime>("UpdatedDate");
 
                     b.HasKey("Id");
@@ -218,9 +217,6 @@ namespace Vuighe.Api.Migrations
                     b.HasIndex("CollectionId");
 
                     b.HasIndex("FileName");
-
-                    b.HasIndex("SearchVector")
-                        .HasAnnotation("Npgsql:IndexMethod", "GIN");
 
                     b.ToTable("Assets");
                 });
@@ -374,8 +370,6 @@ namespace Vuighe.Api.Migrations
 
                     b.Property<int>("LikeCount");
 
-                    b.Property<NpgsqlTsVector>("SearchVector");
-
                     b.Property<Guid?>("ThumbnailId");
 
                     b.Property<string>("Title")
@@ -391,9 +385,6 @@ namespace Vuighe.Api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FilmId");
-
-                    b.HasIndex("SearchVector")
-                        .HasAnnotation("Npgsql:IndexMethod", "GIN");
 
                     b.HasIndex("ThumbnailId");
 
@@ -439,8 +430,6 @@ namespace Vuighe.Api.Migrations
 
                     b.Property<int>("LikeCount");
 
-                    b.Property<NpgsqlTsVector>("SearchVector");
-
                     b.Property<Guid?>("ThumbnailId");
 
                     b.Property<string>("Title")
@@ -452,9 +441,6 @@ namespace Vuighe.Api.Migrations
                     b.Property<int>("ViewCount");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SearchVector")
-                        .HasAnnotation("Npgsql:IndexMethod", "GIN");
 
                     b.HasIndex("ThumbnailId");
 
@@ -528,8 +514,6 @@ namespace Vuighe.Api.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<NpgsqlTsVector>("SearchVector");
-
                     b.Property<Guid?>("ThumbnailId");
 
                     b.Property<string>("Title");
@@ -538,12 +522,7 @@ namespace Vuighe.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SearchVector")
-                        .HasAnnotation("Npgsql:IndexMethod", "GIN");
-
                     b.HasIndex("ThumbnailId");
-
-                    b.HasIndex("Title");
 
                     b.ToTable("Posts");
                 });
@@ -581,16 +560,9 @@ namespace Vuighe.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(500);
 
-                    b.Property<NpgsqlTsVector>("SearchVector");
-
                     b.Property<DateTime>("UpdatedDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name");
-
-                    b.HasIndex("SearchVector")
-                        .HasAnnotation("Npgsql:IndexMethod", "GIN");
 
                     b.ToTable("Tags");
                 });
@@ -643,9 +615,8 @@ namespace Vuighe.Api.Migrations
             modelBuilder.Entity("Vuighe.Model.Entities.Account", b =>
                 {
                     b.HasOne("Vuighe.Model.Entities.Asset", "ProfileImage")
-                        .WithOne()
-                        .HasForeignKey("Vuighe.Model.Entities.Account", "ProfileImageId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .WithMany()
+                        .HasForeignKey("ProfileImageId");
                 });
 
             modelBuilder.Entity("Vuighe.Model.Entities.Asset", b =>

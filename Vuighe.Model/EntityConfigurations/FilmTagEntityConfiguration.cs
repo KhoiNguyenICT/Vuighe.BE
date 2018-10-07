@@ -8,8 +8,6 @@ namespace Vuighe.Model.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<FilmTag> builder)
         {
-            builder.HasKey(x => new {x.FilmId, x.TagId});
-
             builder.HasOne(x => x.Film)
                 .WithMany(x => x.FilmTags)
                 .HasForeignKey(x => x.FilmId);

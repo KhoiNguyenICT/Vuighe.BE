@@ -5,15 +5,11 @@ using Vuighe.Model.Entities;
 
 namespace Vuighe.Model.EntityConfigurations
 {
-    public class AssetEntityConfiguration : IEntityTypeConfiguration<Asset>
+    public class TagEntityConfiguration : IEntityTypeConfiguration<Tag>
     {
-        public void Configure(EntityTypeBuilder<Asset> builder)
+        public void Configure(EntityTypeBuilder<Tag> builder)
         {
-            builder.HasIndex(x => x.FileName);
-
-            builder.HasOne(x => x.Collection)
-                .WithMany(x => x.Assets)
-                .HasForeignKey(x => x.CollectionId);
+            builder.HasIndex(x => x.Name);
 
             builder.Property<NpgsqlTsVector>("SearchVector");
             builder.HasIndex("SearchVector").ForNpgsqlHasMethod("GIN");

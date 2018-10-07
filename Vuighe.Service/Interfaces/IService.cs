@@ -10,7 +10,7 @@ namespace Vuighe.Service.Interfaces
     public interface IService<TEntity>
         where TEntity : BaseEntity
     {
-        Task<TEntity> Add(TEntity entity);
+        Task Add(TEntity entity);
 
         Task<TEntity> Get(Guid id);
 

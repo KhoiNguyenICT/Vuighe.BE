@@ -12,6 +12,7 @@ using Vuighe.Api.Extensions;
 using Vuighe.Common.Constants;
 using Vuighe.Common.Errors;
 using Vuighe.Model.Entities;
+using Vuighe.Model.Utils;
 using Vuighe.Service.Interfaces;
 
 namespace Vuighe.Api.Controllers
@@ -81,9 +82,13 @@ namespace Vuighe.Api.Controllers
         }
 
         [HttpGet("collection/{collectionId}")]
-        public IActionResult GetAssets(Guid collectionId, int skip = 0, int take = 10)
+        public IActionResult GetAssets(Guid collectionId, int skip = 0, int take = 10, string query = null)
         {
             var queryable = _collectionService.Queryable();
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                queryable = queryable.MatchSearchQuery(query);
+            }
             var result = queryable
                 .Include(x => x.Assets)
                 .FirstOrDefault(x => x.Id == collectionId)?.Assets

@@ -44,19 +44,28 @@ namespace Vuighe.Model
 
         public virtual DbSet<Comment> Comments { get; set; }
 
-        public virtual DbSet<Tag> Tags { get; set; }    
+        public virtual DbSet<Tag> Tags { get; set; }
+
+        public virtual DbSet<Post> Posts { get; set; }
+
+        public virtual DbSet<PostTag> PostTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new AccountEntityConfiguration());
             builder.ApplyConfiguration(new AssetEntityConfiguration());
             builder.ApplyConfiguration(new CategoryEntityConfiguration());
             builder.ApplyConfiguration(new CategoryFilmEntityConfiguration());
+            builder.ApplyConfiguration(new CategoryFilmEntityConfiguration());
             builder.ApplyConfiguration(new CategoryTagEntityConfiguration());
+            builder.ApplyConfiguration(new CommentEntityConfiguration());
             builder.ApplyConfiguration(new EpisodeEntityConfiguration());
             builder.ApplyConfiguration(new EpisodeTagEntityConfiguration());
             builder.ApplyConfiguration(new FilmEntityConfiguration());
             builder.ApplyConfiguration(new FilmTagEntityConfiguration());
-            builder.ApplyConfiguration(new CommentEntityConfiguration());
+            builder.ApplyConfiguration(new PostEntityConfiguration());
+            builder.ApplyConfiguration(new PostTagEntityConfiguration());
+            builder.ApplyConfiguration(new TagEntityConfiguration());
             base.OnModelCreating(builder);
         }
 
@@ -71,6 +80,7 @@ namespace Vuighe.Model
                     {
                         changedOrAddedItem.CreatedDate = DateTime.Now;
                     }
+
                     changedOrAddedItem.UpdatedDate = DateTime.Now;
                 }
             }

@@ -8,8 +8,6 @@ namespace Vuighe.Model.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<EpisodeTag> builder)
         {
-            builder.HasKey(x => new { x.EpisodeId, x.TagId });
-
             builder.HasOne(x => x.Episode)
                 .WithMany(x => x.EpisodeTags)
                 .HasForeignKey(x => x.EpisodeId);

@@ -76,6 +76,7 @@ namespace Vuighe.Api
             services.AddScoped<ICategoryFilmService, CategoryFilmService>();
             services.AddScoped<IAssetService, AssetService>();
             services.AddScoped<IConfigurationService, ConfigurationService>();
+            services.AddScoped<ITagService, TagService>();
 
             Mapper.Initialize(cfg =>
             {

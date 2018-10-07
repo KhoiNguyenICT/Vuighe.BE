@@ -11,8 +11,8 @@ using Vuighe.Model;
 namespace Vuighe.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180929142749_FullTextSearchCategory")]
-    partial class FullTextSearchCategory
+    [Migration("20181002014907_FullTextSearchFilm")]
+    partial class FullTextSearchFilm
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -276,19 +276,20 @@ namespace Vuighe.Api.Migrations
 
             modelBuilder.Entity("Vuighe.Model.Entities.CategoryTag", b =>
                 {
-                    b.Property<Guid>("CategoryId");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("TagId");
+                    b.Property<Guid>("CategoryId");
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("TagId");
 
                     b.Property<DateTime>("UpdatedDate");
 
-                    b.HasKey("CategoryId", "TagId");
+                    b.HasKey("Id");
 
-                    b.HasAlternateKey("Id");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("TagId");
 
@@ -338,13 +339,16 @@ namespace Vuighe.Api.Migrations
 
             modelBuilder.Entity("Vuighe.Model.Entities.ConfigurationValue", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<string>("Key")
-                        .ValueGeneratedOnAdd()
+                        .IsRequired()
                         .HasMaxLength(255);
 
                     b.Property<string>("Value");
 
-                    b.HasKey("Key");
+                    b.HasKey("Id");
 
                     b.ToTable("ConfigurationValues");
                 });
@@ -391,19 +395,20 @@ namespace Vuighe.Api.Migrations
 
             modelBuilder.Entity("Vuighe.Model.Entities.EpisodeTag", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
                     b.Property<Guid>("EpisodeId");
 
                     b.Property<Guid>("TagId");
 
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<Guid>("Id");
-
                     b.Property<DateTime>("UpdatedDate");
 
-                    b.HasKey("EpisodeId", "TagId");
+                    b.HasKey("Id");
 
-                    b.HasAlternateKey("Id");
+                    b.HasIndex("EpisodeId");
 
                     b.HasIndex("TagId");
 
@@ -446,19 +451,20 @@ namespace Vuighe.Api.Migrations
 
             modelBuilder.Entity("Vuighe.Model.Entities.FilmTag", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
                     b.Property<Guid>("FilmId");
 
                     b.Property<Guid>("TagId");
 
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<Guid>("Id");
-
                     b.Property<DateTime>("UpdatedDate");
 
-                    b.HasKey("FilmId", "TagId");
+                    b.HasKey("Id");
 
-                    b.HasAlternateKey("Id");
+                    b.HasIndex("FilmId");
 
                     b.HasIndex("TagId");
 
@@ -495,6 +501,52 @@ namespace Vuighe.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LoginHistories");
+                });
+
+            modelBuilder.Entity("Vuighe.Model.Entities.Post", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<Guid?>("ThumbnailId");
+
+                    b.Property<string>("Title");
+
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ThumbnailId");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Vuighe.Model.Entities.PostTag", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<Guid>("PostId");
+
+                    b.Property<Guid>("TagId");
+
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("PostTags");
                 });
 
             modelBuilder.Entity("Vuighe.Model.Entities.Tag", b =>
@@ -662,6 +714,26 @@ namespace Vuighe.Api.Migrations
 
                     b.HasOne("Vuighe.Model.Entities.Tag", "Tag")
                         .WithMany("FilmTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Vuighe.Model.Entities.Post", b =>
+                {
+                    b.HasOne("Vuighe.Model.Entities.Asset", "Thumbnail")
+                        .WithMany()
+                        .HasForeignKey("ThumbnailId");
+                });
+
+            modelBuilder.Entity("Vuighe.Model.Entities.PostTag", b =>
+                {
+                    b.HasOne("Vuighe.Model.Entities.Post", "Post")
+                        .WithMany("PostTags")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Vuighe.Model.Entities.Tag", "Tag")
+                        .WithMany("PostTags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

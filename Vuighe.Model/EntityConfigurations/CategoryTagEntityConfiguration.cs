@@ -8,8 +8,6 @@ namespace Vuighe.Model.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<CategoryTag> builder)
         {
-            builder.HasKey(x => new {x.CategoryId, x.TagId});
-
             builder.HasOne(x => x.Category)
                 .WithMany(x => x.CategoryTags)
                 .HasForeignKey(x => x.CategoryId);

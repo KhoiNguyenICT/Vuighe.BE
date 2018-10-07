@@ -12,5 +12,6 @@ namespace Vuighe.Model.Entities
         public virtual ICollection<FilmTag> FilmTags { get; set; }
         public virtual ICollection<EpisodeTag> EpisodeTags { get; set; }
         public virtual ICollection<CategoryTag> CategoryTags { get; set; }
+        public virtual ICollection<PostTag> PostTags { get; set; }
     }
 }

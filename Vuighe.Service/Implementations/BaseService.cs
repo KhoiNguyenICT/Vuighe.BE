@@ -20,11 +20,10 @@ namespace Vuighe.Service.Implementations
             _context = context;
         }
 
-        public async Task<TEntity> Add(TEntity entity)
+        public async Task Add(TEntity entity)
         {
-            var entry = _context.Set<TEntity>().Add(entity);
+            _context.Entry(entity).State = EntityState.Added;
             await _context.SaveChangesAsync();
-            return entry.Entity;
         }
 
         public async Task<TEntity> Get(Guid id)
@@ -55,7 +54,7 @@ namespace Vuighe.Service.Implementations
 
         public async Task Update(TEntity entity)
         {
-            _context.Update(entity);
+            _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
